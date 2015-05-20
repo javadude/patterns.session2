@@ -17,6 +17,9 @@ public class PersonSample {
 		sue.addPropertyChangeListener(e -> {if ("address".equals(e.getPropertyName())) mike.setAddress(sue.getAddress());});
 		
 		mike.setAddress("1313 Mockingbird Lane");
+		
+		System.out.println("Mike: " + mike.getAddress());
+		System.out.println("Sue: " + sue.getAddress());
 	}
 
 }

@@ -21,8 +21,10 @@ public class Person {
 		propertyChangeListeners.remove(propertyChangeListener);
 	}
 	private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-		for (PropertyChangeListener propertyChangeListener : propertyChangeListeners) {
-			propertyChangeListener.propertyChange(new PropertyChangeEvent(this, propertyName, oldValue, newValue));
+		if (oldValue == null || !oldValue.equals(newValue)) {
+			for (PropertyChangeListener propertyChangeListener : propertyChangeListeners) {
+				propertyChangeListener.propertyChange(new PropertyChangeEvent(this, propertyName, oldValue, newValue));
+			}
 		}
 	}
 	
