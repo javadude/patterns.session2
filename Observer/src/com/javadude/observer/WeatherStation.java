@@ -24,12 +24,20 @@ public class WeatherStation {
 	
 	// 3 - Notify listeners when something interesting happens
 	private void notifySunRose() {
-		for (SunListener sunListener : sunListeners) {
+		List<SunListener> targets;
+		synchronized (sunListeners) {
+			targets = new ArrayList<SunListener>(sunListeners);
+		}
+		for (SunListener sunListener : targets) {
 			sunListener.sunRose(Calendar.getInstance());
 		}
 	}
 	private void notifySunSet() {
-		for (SunListener sunListener : sunListeners) {
+		List<SunListener> targets;
+		synchronized (sunListeners) {
+			targets = new ArrayList<SunListener>(sunListeners);
+		}
+		for (SunListener sunListener : targets) {
 			sunListener.sunSet(Calendar.getInstance());
 		}
 	}
