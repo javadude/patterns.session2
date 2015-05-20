@@ -9,8 +9,14 @@ import javax.swing.WindowConstants;
 
 public class ButtonExample {
 	private static class ButtonReport implements ActionListener {
+		private int num;
+		
+		public ButtonReport(int num) {
+			this.num = num;
+		}
+
 		@Override public void actionPerformed(ActionEvent e) {
-			System.out.println("Button was pressed!");
+			System.out.println(num + " Button was pressed!");
 		}
 	}
 	public static void main(String[] args) {
@@ -18,8 +24,9 @@ public class ButtonExample {
 		JButton button = new JButton("Press Me");
 		frame.add(button);
 		
-		ButtonReport buttonReport = new ButtonReport();
-		button.addActionListener(buttonReport);
+		button.addActionListener(new ButtonReport(1));
+		button.addActionListener(new ButtonReport(2));
+		button.addActionListener(new ButtonReport(3));
 		
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.pack();
