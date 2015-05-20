@@ -8,25 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public class ButtonExample {
-	private static class ButtonReport implements ActionListener {
-		private int num;
-		
-		public ButtonReport(int num) {
-			this.num = num;
-		}
-
-		@Override public void actionPerformed(ActionEvent e) {
-			System.out.println(num + " Button was pressed!");
-		}
-	}
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		JButton button = new JButton("Press Me");
 		frame.add(button);
 		
-		button.addActionListener(new ButtonReport(1));
-		button.addActionListener(new ButtonReport(2));
-		button.addActionListener(new ButtonReport(3));
+		button.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				System.out.println("Button was pressed!");
+			}});
 		
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.pack();
