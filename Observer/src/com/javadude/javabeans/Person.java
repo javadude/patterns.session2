@@ -1,9 +1,7 @@
 package com.javadude.javabeans;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.beans.PropertyChangeSupport;
 
 // JavaBean with bound properties
 //    public get/set methods define read/write "properties"
@@ -12,20 +10,19 @@ public class Person {
 	private String address;
 	private int age;
 
-	private List<PropertyChangeListener> propertyChangeListeners = new ArrayList<PropertyChangeListener>();
-	
-	public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-		propertyChangeListeners.add(propertyChangeListener);
+	// PropertyChangeSupport manages the list and fires events on our behalf
+	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(listener);
 	}
-	public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-		propertyChangeListeners.remove(propertyChangeListener);
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.removePropertyChangeListener(listener);
 	}
-	private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-		if (oldValue == null || !oldValue.equals(newValue)) {
-			for (PropertyChangeListener propertyChangeListener : propertyChangeListeners) {
-				propertyChangeListener.propertyChange(new PropertyChangeEvent(this, propertyName, oldValue, newValue));
-			}
-		}
+	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+	}
+	public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+		propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
 	}
 	
 	// Properties:
@@ -39,7 +36,7 @@ public class Person {
 	public void setName(String name) {
 		String oldValue = this.name;
 		this.name = name;
-		firePropertyChange("name", oldValue, name);
+		propertyChangeSupport.firePropertyChange("name", oldValue, name);
 	}
 
 	// defines read/write property "age"
@@ -49,7 +46,7 @@ public class Person {
 	public void setAge(int age) {
 		int oldValue = this.age;
 		this.age = age;
-		firePropertyChange("name", oldValue, age);
+		propertyChangeSupport.firePropertyChange("name", oldValue, age);
 	}
 	
 	// defines read/write property "address"
@@ -59,6 +56,6 @@ public class Person {
 	public void setAddress(String address) {
 		String oldValue = this.address;
 		this.address = address;
-		firePropertyChange("address", oldValue, address);
+		propertyChangeSupport.firePropertyChange("address", oldValue, address);
 	}
 }
