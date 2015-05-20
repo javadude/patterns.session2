@@ -12,5 +12,11 @@ public class PersonSample {
 		sue.setName("Sue");
 		sue.setAddress("123 Sesame");
 		sue.setAge(47);
+		
+		mike.addPropertyChangeListener(e -> {if ("address".equals(e.getPropertyName())) sue.setAddress(mike.getAddress());});
+		sue.addPropertyChangeListener(e -> {if ("address".equals(e.getPropertyName())) mike.setAddress(sue.getAddress());});
+		
+		mike.setAddress("1313 Mockingbird Lane");
 	}
+
 }
