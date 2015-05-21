@@ -16,10 +16,14 @@ public class WeatherStation {
 	
 	// 2 - Allow external code to add/remove listeners
 	public void addSunListener(SunListener sunListener) {
-		sunListeners.add(sunListener);
+		synchronized (sunListeners) {
+			sunListeners.add(sunListener);
+		}
 	}
 	public void removeSunListener(SunListener sunListener) {
-		sunListeners.remove(sunListener);
+		synchronized (sunListeners) {
+			sunListeners.remove(sunListener);
+		}
 	}
 	
 	// 3 - Notify listeners when something interesting happens
