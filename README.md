@@ -1,1 +1,3 @@
-# patterns.session2
+# Design Patterns Brown Bags, Session 2
+
+- Observer
